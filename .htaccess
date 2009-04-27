@@ -1,0 +1,9 @@
+# Uncomment this if you have problems with RewriteRule view. See 'PrettyUrls' on BitWeaver's wiki.
+# Options -MultiViews
+<IfModule mod_rewrite.c>
+	RewriteEngine  on
+
+	RewriteRule    ^([0-9]+)$  index.php?content_id=$1  [L]
+	RewriteRule    ^action/([0-9]+)$  index.php?action_id=$1  [L]
+	RewriteRule    ^content/([0-9]+)$  index.php?content_id=$1  [L]
+</IfModule>

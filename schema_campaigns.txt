@@ -1,0 +1,90 @@
+SKIP
+| chapter_KEY                       | int(16)                              | YES  |     | NULL                |                             | 
+| Last_Modified                     | timestamp                            | NO   |     | CURRENT_TIMESTAMP   | on update CURRENT_TIMESTAMP | 
+| Date_Created                      | timestamp                            | NO   |     | 0000-00-00 00:00:00 |                             | 
+| PRIVATE_Recent_Update             | varchar(64)                          | YES  |     | NULL                |                             | 
+| More_Info                         | text                                 | YES  |     | NULL                |                             | 
+| photo_KEY                         | int(16)                              | YES  |     | NULL                |                             | 
+| rep_KEYS                          | blob                                 | YES  |     | NULL                |                             | 
+| person_legislator_IDS             | blob                                 | YES  |     | NULL                |                             | 
+| exclude_person_legislator_IDS     | blob                                 | YES  |     | NULL                |                             | 
+| recipient_KEYS                    | blob                                 | YES  |     | NULL                |                             | 
+| recipient_group_KEYS              | blob                                 | YES  |     | NULL                |                             | 
+| Letter_Salutation                 | varchar(64)                          | YES  |     | NULL                |                             | 
+| Footer                            | text                                 | YES  |     | NULL                |                             | 
+| PRIVATE_Emails_Sent               | int(16)                              | YES  |     | 0                   |                             | 
+| PRIVATE_Faxes_Sent                | int(16)                              | YES  |     | 0                   |                             | 
+| Hide_Keep_Me_Informed             | tinyint(1)                           | YES  |     | NULL                |                             | 
+| Success_Message                   | varchar(255)                         | YES  |     | NULL                |                             | 
+| Spread_The_Word_Text              | text                                 | YES  |     | NULL                |                             | 
+| Spread_The_Word_Redirect_Path     | varchar(255)                         | YES  |     | NULL                |                             | 
+| exclude_rep_KEYS                  | blob                                 | YES  |     | NULL                |                             | 
+| Request                           | text                                 | YES  |     | NULL                |                             | 
+| Required                          | text                                 | YES  |     | NULL                |                             | 
+| redirect_path                     | varchar(255)                         | YES  |     | NULL                |                             | 
+| email_trigger_KEYS                | text                                 | YES  |     | NULL                |                             | 
+| groups_KEYS                       | blob                                 | YES  |     | NULL                |                             | 
+| Automatically_add_to_Groups       | tinyint(1)                           | YES  |     | NULL                |                             | 
+| Default_Tracking_Code             | varchar(128)                         | YES  |     | NULL                |                             | 
+| READONLY_Hit_Count                | int(16)                              | YES  |     | NULL                |                             | 
+| Archive                           | enum('Current','Archived')           | YES  |     | NULL                |                             | 
+| Brief_Summary                     | text                                 | YES  |     | NULL                |                             | 
+| Enable_Preview                    | tinyint(1)                           | YES  |     | NULL                |                             | 
+| Preview_Text                      | text                                 | YES  |     | NULL                |                             | 
+| Sponsorship_Link                  | text                                 | YES  |     | NULL                |                             | 
+| Roll_Call_Vote                    | enum('Yea','Nay','N/A')              | YES  |     | NULL                |                             | 
+| roll_call_ID                      | int(16)                              | YES  |     | NULL                |                             | 
+| Alternate_Description             | text                                 | YES  |     | NULL                |                             | 
+| Alternate_Subject                 | text                                 | YES  |     | NULL                |                             | 
+| Alternate_Content                 | text                                 | YES  |     | NULL                |                             | 
+| Restricted_Regions                | text                                 | YES  |     | NULL                |                             | 
+| Restricted_Districts              | text                                 | YES  |     | NULL                |                             | 
+| Restricted_Text                   | text                                 | YES  |     | NULL                |                             | 
+| No_Recipient_Text                 | text                                 | YES  |     | NULL                |                             | 
+| Excluded_Recipient_Text           | text                                 | YES  |     | NULL                |                             | 
+| Template                          | varchar(128)                         | YES  |     | NULL      
+| campaignid                        | varchar(64)                          | YES  |     | NULL                |                             | 
+| Learn_More_Link                   | varchar(255)                         | YES  |     | NULL                |                             | 
+| Max_Number_Of_Emails              | int(16)                              | YES  |     | 10000               |                             | 
+
+
+
+NOT SURE
+| Max_Number_Of_Faxes               | int(16)                              | YES  |     | 0                   |                             | 
+
+
+IN FORM BUT NOT LOCAL DB
+| organization_KEY                  | int(16)                              | YES  | MUL | NULL                |                             | 
+| Suppress_Automatic_Response_Email | tinyint(1)                           | YES  |     | NULL                |                             | 
+| Status                            | enum('Active','Inactive','Archived') | YES  |     | NULL                |                             | 
+| Allow_Emails                      | tinyint(1)                           | YES  |     | 1                   |                             | 
+| Allow_Faxes                       | tinyint(1)                           | YES  |     | 1                   |                             | 
+| Hide_Message_Type_Options         | tinyint(1)                           | YES  |     | NULL                |                             | 
+
+
+SPOOF
+| Reference_Name                    | varchar(64)                          | YES  |     | NULL                |                             | 
+lc.title
+
+
+CHANGED NAME
+| campaign_KEY                      | int(16)                              | NO   | PRI | NULL                | auto_increment              | 
+key_id
+| Campaign_Title                    | varchar(200)                         | YES  |     | NULL                |                             | 
+lc.title
+| Description                       | text                                 | YES  |     | NULL                |                             | 
+lc.data
+| Subject_cannot_be_Edited          | tinyint(1)                           | YES  |     | NULL                |                             | 
+subject_editable
+| Letter_cannot_be_Edited           | tinyint(1)                           | YES  |     | NULL                |                             | 
+letter_editable
+| Thank_You_Page_Text_or_HTML       | text                                 | YES  |     | NULL                |                             | 
+thankyou_data
+
+SAME NAME
+| Suggested_Subject                 | text                                 | YES  |     | NULL                |                             | 
+| Suggested_Content                 | text                                 | YES  |     | NULL                |                             | 
+
+
+
+

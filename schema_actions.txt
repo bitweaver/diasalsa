@@ -1,0 +1,159 @@
+http://salsa.pastebin.com
+
+
+mysql> desc action_sent_content;
++-------------------------+--------------+------+-----+---------------------+----------------+
+| Field                   | Type         | Null | Key | Default             | Extra          |
++-------------------------+--------------+------+-----+---------------------+----------------+
+| action_sent_content_KEY | int(16)      | NO   | PRI | NULL                | auto_increment |
+| organization_KEY        | int(16)      | YES  |     | NULL                |                |
+| action_KEY              | int(16)      | YES  |     | NULL                |                |
+| Last_Modified           | timestamp    | NO   |     | CURRENT_TIMESTAMP   |                |
+| Date_Created            | timestamp    | NO   |     | 0000-00-00 00:00:00 |                |
+| Letter_Subject          | varchar(255) | YES  |     | NULL                |                |
+| Letter_Content          | text         | YES  |     | NULL                |                |
+| Letter_MD5              | varchar(64)  | YES  |     | NULL                |                |
++-------------------------+--------------+------+-----+---------------------+----------------+
+8 rows in set (0.00 sec)
+
+
+
+mysql> desc action_content_detail;
++---------------------------+--------------+------+-----+---------+----------------+
+| Field                     | Type         | Null | Key | Default | Extra          |
++---------------------------+--------------+------+-----+---------+----------------+
+| action_content_detail_KEY | int(16)      | NO   | PRI | NULL    | auto_increment |
+| organization_KEY          | int(16)      | YES  | MUL | NULL    |                |
+| action_content_KEY        | int(16)      | YES  | MUL | NULL    |                |
+| Recommended_Subject       | varchar(200) | YES  |     | NULL    |                |
+| Recommended_Content       | text         | YES  |     | NULL    |                |
+| Fixed_Subject             | tinyint(1)   | YES  |     | NULL    |                |
+| Fixed_Content             | tinyint(1)   | YES  |     | NULL    |                |
++---------------------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+
+
+mysql> desc action_content;
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+-----+---------+----------------+
+| Field              | Type                                                                                                                                                                                                                      | Null | Key | Default | Extra          |
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+-----+---------+----------------+
+| action_content_KEY | int(16)                                                                                                                                                                                                                   | NO   | PRI | NULL    | auto_increment |
+| organization_KEY   | int(16)                                                                                                                                                                                                                   | YES  | MUL | NULL    |                |
+| action_KEY         | int(16)                                                                                                                                                                                                                   | YES  |     | NULL    |                |
+| Name               | varchar(128)                                                                                                                                                                                                              | YES  |     | NULL    |                |
+| Content_Type       | enum('Fixed Petition','Supporter Composed','Supporter Composed with Fixed Subject','Supporter Composed with Talking Points','Supporter Composed with Fixed Subject and Talking Points','Phone Notes with Talking Points') | YES  |     | NULL    |                |
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> desc action_target;
++--------------------+---------------------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+| Field              | Type                                                                                              | Null | Key | Default             | Extra          |
++--------------------+---------------------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+| action_target_KEY  | int(16)                                                                                           | NO   | PRI | NULL                | auto_increment |
+| Last_Modified      | timestamp                                                                                         | NO   |     | CURRENT_TIMESTAMP   |                |
+| Date_Created       | timestamp                                                                                         | NO   |     | 0000-00-00 00:00:00 |                |
+| organization_KEY   | int(16)                                                                                           | YES  | MUL | NULL                |                |
+| action_KEY         | int(16)                                                                                           | YES  | MUL | NULL                |                |
+| target             | enum('FE','FH','FS','SE','SH','SS','custom recipients','custom recipient groups','media outlets') | YES  |     | NULL                |                |
+| target_details     | text                                                                                              | YES  |     | NULL                |                |
+| target_KEYS        | text                                                                                              | YES  |     | NULL                |                |
+| method             | enum('Email/Webform','Fax','Standard Mail','Postcard','Phone Call','Text Message')                | YES  |     | NULL                |                |
+| action_content_KEY | int(16)                                                                                           | YES  |     | NULL                |                |
+| excluded_KEYS      | text                                                                                              | YES  |     | NULL                |                |
+| Excluded_Message   | text                                                                                              | YES  |     | NULL                |                |
++--------------------+---------------------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+12 rows in set (0.00 sec)
+
+
+
+
+mysql> desc action;
++-------------------------------+-----------------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+| Field                         | Type                                                                                          | Null | Key | Default             | Extra          |
++-------------------------------+-----------------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+| action_KEY                    | int(16)                                                                                       | NO   | PRI | NULL                | auto_increment |
+| organization_KEY              | int(16)                                                                                       | YES  | MUL | NULL                |                |
+| chapter_KEY                   | int(16)                                                                                       | YES  |     | NULL                |                |
+| Last_Modified                 | timestamp                                                                                     | NO   |     | CURRENT_TIMESTAMP   |                |
+| Date_Created                  | timestamp                                                                                     | NO   |     | 0000-00-00 00:00:00 |                |
+| Reference_Name                | varchar(64)                                                                                   | YES  |     | NULL                |                |
+| Title                         | varchar(200)                                                                                  | YES  |     | NULL                |                |
+| Description                   | text                                                                                          | YES  |     | NULL                |                |
+| Allow_Comments                | tinyint(1)                                                                                    | YES  |     | NULL                |                |
+| Comment_Question              | text                                                                                          | YES  |     | NULL                |                |
+| Max_Number_Of_Emails          | int(16)                                                                                       | YES  |     | 100000              |                |
+| Max_Number_Of_Faxes           | int(16)                                                                                       | YES  |     | 0                   |                |
+| Signatures                    | enum('Do not show signatures','Show number of signers','Show number and most recent signers') | YES  |     | NULL                |                |
+| Signature_Goal                | int(11)                                                                                       | YES  |     | NULL                |                |
+| Deadline                      | date                                                                                          | YES  |     | NULL                |                |
+| Signature_Minimum_for_Display | int(11)                                                                                       | YES  |     | NULL                |                |
+| Allow_Anonymous               | tinyint(1)                                                                                    | YES  |     | NULL                |                |
+| Footer                        | text                                                                                          | YES  |     | NULL                |                |
+| Request                       | text                                                                                          | YES  |     | NULL                |                |
+| Required                      | text                                                                                          | YES  |     | NULL                |                |
+| Thank_You_Text                | text                                                                                          | YES  |     | NULL                |                |
+| redirect_path                 | varchar(128)                                                                                  | YES  |     | NULL                |                |
+| email_trigger_KEYS            | text                                                                                          | YES  |     | NULL                |                |
+| add_to_groups_KEYS            | text                                                                                          | YES  |     | NULL                |                |
+| optionally_add_to_groups_KEYS | text                                                                                          | YES  |     | NULL                |                |
+| No_Recipient_Text             | text                                                                                          | YES  |     | NULL                |                |
+| Excluded_Recipient_Text       | text                                                                                          | YES  |     | NULL                |                |
+| Restricted_Regions            | text                                                                                          | YES  |     | NULL                |                |
+| Restricted_Districts          | text                                                                                          | YES  |     | NULL                |                |
+| Restricted_Text               | text                                                                                          | YES  |     | NULL                |                |
+| template_KEY                  | int(16)                                                                                       | YES  |     | NULL                |                |
+| Style                         | enum('Petition','Targeted','Multi-Content','Phone Response')                                  | YES  |     | NULL                |                |
+| Status                        | enum('Active','Inactive')                                                                     | YES  |     | Active              |                |
++-------------------------------+-----------------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+33 rows in set (0.01 sec)
+
+
+
+
+mysql> desc supporter_action_target;
++------------------------------+---------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+| Field                        | Type                                                                                  | Null | Key | Default             | Extra          |
++------------------------------+---------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+| supporter_action_target_KEY  | int(16)                                                                               | NO   | PRI | NULL                | auto_increment |
+| Last_Modified                | timestamp                                                                             | NO   |     | CURRENT_TIMESTAMP   |                |
+| Date_Created                 | timestamp                                                                             | NO   |     | 0000-00-00 00:00:00 |                |
+| organization_KEY             | int(16)                                                                               | YES  | MUL | NULL                |                |
+| action_KEY                   | int(16)                                                                               | YES  | MUL | NULL                |                |
+| supporter_KEY                | int(16)                                                                               | YES  | MUL | NULL                |                |
+| supporter_action_KEY         | int(16)                                                                               | YES  | MUL | NULL                |                |
+| supporter_action_content_KEY | int(16)                                                                               | YES  |     | NULL                |                |
+| method                       | enum('Email','Fax','Web Form','Standard Mail','Postcard','Phone Call','Text Message') | YES  |     | NULL                |                |
+| target_type                  | enum('legislator','recipient','media')                                                | YES  | MUL | NULL                |                |
+| target_key                   | int(16)                                                                               | YES  |     | NULL                |                |
+| action_result_KEY            | int(16)                                                                               | YES  |     | NULL                |                |
+| resend_now                   | tinyint(1)                                                                            | YES  |     | 0                   |                |
++------------------------------+---------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+13 rows in set (0.00 sec)
+
+
+
+
+
+mysql> desc supporter_action_target;
++------------------------------+---------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+| Field                        | Type                                                                                  | Null | Key | Default             | Extra          |
++------------------------------+---------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+| supporter_action_target_KEY  | int(16)                                                                               | NO   | PRI | NULL                | auto_increment |
+| Last_Modified                | timestamp                                                                             | NO   |     | CURRENT_TIMESTAMP   |                |
+| Date_Created                 | timestamp                                                                             | NO   |     | 0000-00-00 00:00:00 |                |
+| organization_KEY             | int(16)                                                                               | YES  | MUL | NULL                |                |
+| action_KEY                   | int(16)                                                                               | YES  | MUL | NULL                |                |
+| supporter_KEY                | int(16)                                                                               | YES  | MUL | NULL                |                |
+| supporter_action_KEY         | int(16)                                                                               | YES  | MUL | NULL                |                |
+| supporter_action_content_KEY | int(16)                                                                               | YES  |     | NULL                |                |
+| method                       | enum('Email','Fax','Web Form','Standard Mail','Postcard','Phone Call','Text Message') | YES  |     | NULL                |                |
+| target_type                  | enum('legislator','recipient','media')                                                | YES  | MUL | NULL                |                |
+| target_key                   | int(16)                                                                               | YES  |     | NULL                |                |
+| action_result_KEY            | int(16)                                                                               | YES  |     | NULL                |                |
+| resend_now                   | tinyint(1)                                                                            | YES  |     | 0                   |                |
++------------------------------+---------------------------------------------------------------------------------------+------+-----+---------------------+----------------+
+13 rows in set (0.00 sec)
+
