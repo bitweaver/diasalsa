@@ -1333,19 +1333,6 @@ class SalsaAction extends LibertyMime {
 	function getDisplayUrl( $pContentId = NULL, $pParamHash = NULL ) {
 		global $gBitSystem;
 
-		/*
-		$ret = NULL;
-		if( empty( $pContentId ) && $this->isValid() ) {
-			$pContentId = $this->mContentId;
-			// if we have a action id we'll use it. we should, but nice to check
-			if( !empty( $this->mActionId ) ){
-				$pParamHash['action_id'] = $this->mActionId;
-			}
-
-			return DIASALSA_PKG_URL.'index.php?action_id='.$pParamHash['action_id'];
-		}
-		 */
-
 		if( !empty( $pParamHash['action_id'] ) || !empty( $this->mActionId ) ){
 			$actionId = !empty( $pParamHash['action_id'] )?$pParamHash['action_id']:$this->mActionId;
 		}
@@ -1540,6 +1527,21 @@ class SalsaAction extends LibertyMime {
 		return $ret;
 	}
 
+	function getSendersCount( $pParamHash ){
+		$ret = NULL;
+
+		if( !empty( $pParamHash['action_id'] )){
+			$query_cant = "
+				SELECT COUNT(*)
+				FROM `".BIT_DB_PREFIX."diasalsa_track` dt
+				WHERE dt.`action_id` = ?";
+			
+			$ret = $this->mDb->getOne( $query_cant, array( $pParamHash['action_id'] ) );
+		}
+		
+		return $ret;
+	}
+
 	// convenience function
 	function getNonSendersList(){
 		$listHash['group_non_senders'] = TRUE;
@@ -1564,6 +1566,73 @@ class SalsaAction extends LibertyMime {
 			// @TODO someday add pagination and max results to this list - for now get them all
 			$ret = $this->getContentList( $listHash );
 		}
+		return $ret;
+	}
+
+	function getActionList( &$pListHash ){
+		global $gBitUser, $gBitSystem;
+
+		if( empty( $pListHash['sort_mode'] ) ){
+			$pListHash['sort_mode'] = 'created_asc';
+		}
+
+		LibertyContent::prepGetList( $pListHash );
+
+		$selectSql = ''; $joinSql = ''; $whereSql = '';
+		$bindVars = array();
+		array_push( $bindVars, $this->mContentTypeGuid );
+
+		$this->getServicesSql( 'content_list_sql_function', $selectSql, $joinSql, $whereSql, $bindVars, NULL, $pListHash );
+
+		// this will set $find, $sort_mode, $max_records and $offset
+		extract( $pListHash );
+
+		$sortModePrefix = 'lc.';
+		$sort_mode = $sortModePrefix . $this->mDb->convertSortmode( $pListHash['sort_mode'] );
+
+		// this could go in groups pkg
+		if( $gBitSystem->isPackageActive( 'group' ) ){
+			$selectSql .= ", lcg.`title` AS group_title, lcg.`content_id` AS group_content_id";
+			$joinSql .= "LEFT OUTER JOIN `".BIT_DB_PREFIX."groups_content_cnxn_map` gccm ON lc.`content_id` = gccm.`to_content_id`
+						 LEFT OUTER JOIN `".BIT_DB_PREFIX."liberty_content` lcg ON gccm.`group_content_id` = lcg.`content_id`";
+		}
+
+		$query = "
+			SELECT sa.*, lc.*, 
+				acm.`action_c_key_id` AS `action_content_key`, 
+				acm.`action_c_detail_key_id` AS `action_content_detail_key`, 
+				lc.*, lch.`hits`, lcds.`data` AS `summary`, lc.`last_modified` AS sort_date,
+				lf.storage_path AS `image_attachment_path` 
+				$selectSql
+			FROM `".BIT_DB_PREFIX."diasalsa_actions` sa
+				LEFT JOIN 		`".BIT_DB_PREFIX."diasalsa_action_content_map` acm ON acm.`content_id` = sa.`content_id`
+				INNER JOIN 		`".BIT_DB_PREFIX."liberty_content` lc 		ON lc.`content_id` 		   = sa.`content_id`
+				INNER JOIN		`".BIT_DB_PREFIX."users_users`			 uu ON uu.`user_id`			   = lc.`user_id`
+				LEFT OUTER JOIN `".BIT_DB_PREFIX."liberty_content_hits` lch ON lc.`content_id`         = lch.`content_id`
+				LEFT OUTER JOIN `".BIT_DB_PREFIX."liberty_content_data` lcds ON (lc.`content_id` = lcds.`content_id` AND lcds.`data_type`='summary')
+				LEFT OUTER JOIN `".BIT_DB_PREFIX."liberty_attachments`   la ON la.`content_id`         = lc.`content_id` AND la.`is_primary` = 'y'
+				LEFT OUTER JOIN `".BIT_DB_PREFIX."liberty_files`         lf ON lf.`file_id`            = la.`foreign_id`
+				$joinSql
+			WHERE lc.`content_type_guid` = ? $whereSql
+			ORDER BY $sort_mode";
+
+        $query_cant = "
+            SELECT COUNT(*)
+            FROM `".BIT_DB_PREFIX."diasalsa_actions` sa
+                INNER JOIN `".BIT_DB_PREFIX."liberty_content` lc ON( lc.`content_id` = sa.`content_id` ) $joinSql
+            WHERE lc.`content_type_guid` = ? $whereSql";
+        $result = $this->mDb->query( $query, $bindVars, $max_records, $offset);
+        $ret = array();
+        while( $res = $result->fetchRow() ) {
+			$res['thumbnail_url'] = SalsaAction::getImageThumbnails( $res );				
+			$res['display_url'] = SalsaAction::getDisplayUrl( NULL, $res );
+			$res['action_count'] = SalsaAction::getSendersCount( $res );
+            $ret[] = $res;
+        }
+        $pListHash["cant"] = $this->mDb->getOne( $query_cant, $bindVars );
+
+		// add all pagination info to pListHash
+		LibertyContent::postGetList( $pListHash );
 		return $ret;
 	}
 

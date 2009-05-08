@@ -17,6 +17,7 @@ require_once( DIASALSA_PKG_PATH.'lookup_action_inc.php');
 // Now check permissions to access this page
 $gContent->verifyViewPermission();
 
+/*
 // Use liberty to get a list
 $centerModuleParams = array( 
 	"layout_area" =>  "c",
@@ -38,7 +39,15 @@ $_REQUEST['content_type_guid'] = $gContent->getContentType();
 
 $gCenterPieces = array();
 array_push( $gCenterPieces, $centerModuleParams );
+*/
+
+$actionList = $gContent->getActionList( $_REQUEST );
+// vd( $actionList );
+$gBitSmarty->assign_by_ref( 'actionList', $actionList );
+
+// getList() has now placed all the pagination information in $_REQUEST['listInfo']
+$gBitSmarty->assign_by_ref( 'listInfo', $_REQUEST['listInfo'] );
 
 // Display the template
-$gBitSystem->display( 'bitpackage:kernel/dynamic.tpl', 'Actions' , array( 'display_mode' => 'display' ));
+$gBitSystem->display( 'bitpackage:diasalsa/list_actions.tpl', 'Actions' , array( 'display_mode' => 'list' ));
 ?>

@@ -243,13 +243,13 @@
 
 						<div class="row">
 							{textarea}{$action.data}{/textarea}
-							{formhelp note="This test will appear on the action page above the letter."}
+							{formhelp note="This text will appear on the action page above the letter."}
 						</div>
 						<div class="row">
 							{formlabel label="Thank You Page" for="thankyou_data"}
 							{forminput}
 								{textarea id="thankyou_data" name="thankyou_data" noformat=y}{$action.thankyou_data}{/textarea}
-								{formhelp note="This test will be displayed after a person sends the letter."}
+								{formhelp note="This text will be displayed after a person sends the letter."}
 							{/forminput}
 						</div>
 					{/legend}
