@@ -1,7 +1,7 @@
 {strip}
 <div class="listing actions">
 	<div class="header">
-		<h1>{tr}Recent Campaigns to Take Action{/tr}</h1>
+		<h1>{tr}Recent Letter Writing Campaigns{/tr}</h1>
 	</div>
 
 	<div class="body">

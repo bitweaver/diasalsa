@@ -1286,7 +1286,7 @@ class SalsaAction extends LibertyMime {
 		global $gBitSystem;
 
 		$baseUrl = $gBitSystem->getConfig( 'salsa_account_url', 'https://hq-org2.democracyinaction.org' );
-		$baseUrl = 'https://sandbox.salsalabs.com';
+		// $baseUrl = 'https://sandbox.salsalabs.com';
 		$url = '';
 
 		switch( $pServiceType ){
@@ -1338,7 +1338,7 @@ class SalsaAction extends LibertyMime {
 		}
 
 		if( !empty( $actionId ) && ( $gBitSystem->isFeatureActive( 'pretty_urls' ) || $gBitSystem->isFeatureActive( 'pretty_urls_extended' ) ) && empty( $pParamHash['override_pretty_urls']  ) ) {
-			$ret = DIASALSA_PKG_URL."action/".$actionId;
+			$ret = DIASALSA_PKG_URL.$actionId;
 		}elseif( !empty( $actionId ) ){
 			$ret = DIASALSA_PKG_URL."index.php?action_id=".$actionId;
 		}
@@ -1365,7 +1365,7 @@ class SalsaAction extends LibertyMime {
 
 		if( !empty( $key ) ){
 			$ret = 'http://org2.democracyinaction.org/o/'.$gBitSystem->getConfig( 'diasalsa_organization_key' ).'/p/dia/action/public/?action_KEY='.$key;
-			$ret = 'https://sandbox.salsalabs.com/o/'.$gBitSystem->getConfig( 'diasalsa_organization_key' ).'/p/dia/action/public/?action_KEY='.$key;
+			// $ret = 'https://sandbox.salsalabs.com/o/'.$gBitSystem->getConfig( 'diasalsa_organization_key' ).'/p/dia/action/public/?action_KEY='.$key;
 		}
 		return $ret;
 	}
