@@ -742,7 +742,7 @@ class SalsaAction extends LibertyMime {
 			$xml = $this->string2XML( $rslt );
 			if( $this->validateXMLRequest( $xml ) ){
 				if( $success = $xml->getElementsByTagName( 'success' )->item(0) ){
-					$pParamHash['key_id'] = $success->getAttribute('key');
+					$pParamHash['key_id'] = $pParamHash['salsa_action_store']['key'] = $success->getAttribute('key');
 				}
 				$this->storeSalsaActionRequiredFields( $pParamHash );
 			}
