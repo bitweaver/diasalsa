@@ -292,6 +292,11 @@ class SalsaAction extends LibertyMime {
 		if( @$this->verifyId( $pParamHash['content_id'] ) ) {
 			$pParamHash['action_store']['content_id'] = $pParamHash['content_id'];
 		}
+ 
+		// this is stupid requiring the summary, but client really really wanted it
+		if( empty( $pParamHash['summary'] ) ){ 
+			$this->mErrors['summary'] = tra( 'You must provide a description of your action item.' );
+		}
 
 		if( $this->isValid() && empty( $pParamHash['key_id'] ) ){ 
 			$this->mErrors['key_id'] = tra( 'Key Id is missing, please check the database and load process.' );
