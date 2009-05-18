@@ -1595,13 +1595,6 @@ class SalsaAction extends LibertyMime {
 		$sortModePrefix = 'lc.';
 		$sort_mode = $sortModePrefix . $this->mDb->convertSortmode( $pListHash['sort_mode'] );
 
-		// this could go in groups pkg
-		if( $gBitSystem->isPackageActive( 'group' ) ){
-			$selectSql .= ", lcg.`title` AS group_title, lcg.`content_id` AS group_content_id";
-			$joinSql .= "LEFT OUTER JOIN `".BIT_DB_PREFIX."groups_content_cnxn_map` gccm ON lc.`content_id` = gccm.`to_content_id`
-						 LEFT OUTER JOIN `".BIT_DB_PREFIX."liberty_content` lcg ON gccm.`group_content_id` = lcg.`content_id`";
-		}
-
 		$query = "
 			SELECT sa.*, lc.*, 
 				acm.`action_c_key_id` AS `action_content_key`, 
