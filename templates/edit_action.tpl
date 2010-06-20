@@ -173,7 +173,7 @@
 								{foreach from=$action.content_links item=clink} 
 									<li id="content_link_{$clink.content_id}">
 										<a class="floaticon" href="javascript:void(0);" onclick="DIASalsa.removeContent({$clink.content_id})">{biticon iname="list-remove" iexplain="remove"}</a>
-										{jspopup class="popup_link" href="`$smarty.const.BIT_ROOT_URL`index.php?content_id=`$clink.content_id`" title=$clink.title width="null" height="null"} ({$clink.content_description})
+										{jspopup class="popup_link" href="`$smarty.const.BIT_ROOT_URL`index.php?content_id=`$clink.content_id`" title=$clink.title width="null" height="null"} ({$clink.content_name})
 										<input type="hidden" name="content_links[]" value="{$clink.content_id}"/>
 									</li>
 								{/foreach}

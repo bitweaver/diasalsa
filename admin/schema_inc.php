@@ -65,4 +65,9 @@ $gBitInstaller->registerContentObjects( DIASALSA_PKG_NAME, array(
 	'SalsaAction'=>DIASALSA_PKG_PATH.'SalsaAction.php',
 ));
 
+// Package Requirements
+$gBitInstaller->registerRequirements( USERS_PKG_NAME, array(
+	'liberty'   => array( 'min' => '2.1.4' ),
+));
+
 

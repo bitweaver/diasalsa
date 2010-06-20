@@ -3,8 +3,8 @@
 	<ul class="listmenu">
 		{foreach from=$contentList item=content} 
 			<li id="content_option_{$content.content_id}">
-				<a class="floaticon" href="javascript:void(0);" onclick="DIASalsa.addContent({$content.content_id},'{$content.title}','{$content.content_description}' )">{biticon iname="list-add" iexplain="remove"}</a>
-				{jspopup class="popup_link" href="`$smarty.const.BIT_ROOT_URL`index.php?content_id=`$content.content_id`" title=$content.title width="null" height="null"} ({$content.content_description})
+				<a class="floaticon" href="javascript:void(0);" onclick="DIASalsa.addContent({$content.content_id},'{$content.title}','{$content.content_name}' )">{biticon iname="list-add" iexplain="remove"}</a>
+				{jspopup class="popup_link" href="`$smarty.const.BIT_ROOT_URL`index.php?content_id=`$content.content_id`" title=$content.title width="null" height="null"} ({$content.content_name})
 			</li>
 		{/foreach}
 	</ul>

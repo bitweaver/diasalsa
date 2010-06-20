@@ -20,7 +20,7 @@ class SalsaAction extends LibertyMime {
 		LibertyMime::LibertyMime();
 		$this->registerContentType( SALSAACTION_CONTENT_TYPE_GUID, array(
 			'content_type_guid' => SALSAACTION_CONTENT_TYPE_GUID,
-			'content_description' => 'Action',
+			'content_name' => 'Action',
 			'handler_class' => 'SalsaAction',
 			'handler_package' => 'diasalsa',
 			'handler_file' => 'SalsaAction.php',
@@ -129,7 +129,7 @@ class SalsaAction extends LibertyMime {
 			$sort_mode = 'lc.' . $this->mDb->convertSortmode( 'title_asc' );
 			$query = "
 				SELECT
-					lc.*, lct.`content_description`
+					lc.*, lct.`content_name`
 				FROM `".BIT_DB_PREFIX."liberty_content` lc
 					LEFT OUTER JOIN `".BIT_DB_PREFIX."liberty_content_types` lct ON ( lct.`content_type_guid` = lc.`content_type_guid` )
 				WHERE lc.`content_id` IN ( $content_ids )
@@ -1441,7 +1441,7 @@ class SalsaAction extends LibertyMime {
 
 			$query = "
 				SELECT
-					lc.*, lct.`content_description`
+					lc.*, lct.`content_name`
 				FROM `".BIT_DB_PREFIX."liberty_content` lc
 					INNER JOIN `".BIT_DB_PREFIX."diasalsa_action_cnxn_map` dacm ON dacm.`to_content_id` = lc.`content_id`
 					LEFT OUTER JOIN `".BIT_DB_PREFIX."liberty_content_types` lct ON ( lct.`content_type_guid` = lc.`content_type_guid` )
