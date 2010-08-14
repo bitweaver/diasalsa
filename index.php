@@ -2,7 +2,7 @@
 /**
  * required setup
  */
-require_once( '../bit_setup_inc.php' );
+require_once( '../kernel/setup_inc.php' );
 
 // if we have a action_id, we display the correct action - otherwise we simply display recent posts
 if( @BitBase::verifyId( $_REQUEST['action_id'] )) {

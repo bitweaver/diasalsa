@@ -4,7 +4,7 @@
  * http://warehouse.democracyinaction.org/o/0/p/salsa/warehouse/public/lookupLegislator.sjs
  **/
 
-require_once( '../bit_setup_inc.php' );
+require_once( '../kernel/setup_inc.php' );
 
 $gBitSystem->verifyPackage( 'diasalsa' );
 

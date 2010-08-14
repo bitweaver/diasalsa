@@ -1,6 +1,6 @@
 <?php
 
-require_once( '../bit_setup_inc.php' );
+require_once( '../kernel/setup_inc.php' );
 
 $gBitSystem->verifyPackage( 'diasalsa' );
 require_once( DIASALSA_PKG_PATH.'lookup_action_inc.php' );
